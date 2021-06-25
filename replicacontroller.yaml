@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: web
+  name: web-controller
+spec:
+  replicas: 2
+  selector:
+    name: web
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      containers:
+      - image: node:8
+        command: ['/bin/sh', '-c']
+        args: ['cd /home && git clone https://github.com/nodesource/simple-nodejs-k8s.git demo && cd demo/sample-app && npm install && node server.js']
+        name: web
+        ports:
+        - containerPort: 3000
+          name: http-server
+
