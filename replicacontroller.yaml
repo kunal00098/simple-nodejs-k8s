@@ -1,20 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: nodejs-deployment
   labels:
-    name: web
-  name: web-controller
+    app: nodejs
 spec:
-  replicas: 5
+  replicas: 3
   selector:
-    name: web
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
     spec:
       containers:
-      - image: node:8
+      - name: nodejs
+        image: node:8
         command: ['/bin/sh', '-c']
-        args: ['cd /home && git clone https://github.com/madhuhaasnannaka/simple-nodejs-k8s.git demo && cd demo/sample-app && npm install && node server.js']
-        name: web
+        args: ['cd /home && git clone https://github.com/madhuhaasnannaka/simple-nodejs-k8s.git demo && cd demo/sample-app && npm install && node server.js']        
         ports:
         - containerPort: 3000
           name: http-server
-
