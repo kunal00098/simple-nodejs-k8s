@@ -8,10 +8,6 @@ spec:
   replicas: 5
   selector:
     name: web
-  template:
-    metadata:
-      labels:
-        name: web
     spec:
       containers:
       - image: node:8
